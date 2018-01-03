@@ -5,6 +5,7 @@
 
 (tool-bar-mode -1)
 (add-to-list 'exec-path "/usr/local/bin/")
+(set-default-font "Consolas 13")
 
 (require 'cider)
 (require 'magit)
@@ -21,17 +22,18 @@
 (require 'counsel-projectile)
 (require 'multiple-cursors)
 (require 'exec-path-from-shell)
-(require 'focus)
 (require 'browse-kill-ring)
 (require 'wgrep)
+(require 'neotree)
 
 ;; Make env vars the same in GUI as per shell
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
-;; Custom functions
-(global-set-key (kbd "C-f") 'isearch-forward)
+;; To avoid the arghz ...
+(winner-mode 1)
 
+;; Custom functions
 (defun show-file-name ()
   "Show the full path file name in the minibuffer."
   (interactive)
@@ -47,6 +49,10 @@
 
 ;; Add a space after line numbers in linum mode
 (setq linum-format "%d ")
+
+;; Neotree setup
+(setq neo-window-width 35)
+(global-set-key (kbd "C-c n") 'neotree)
 
 ;; Highlight Symbol setup - bind to F3
 (global-set-key [(control f3)] 'highlight-symbol)
@@ -69,7 +75,6 @@
 
 ;; Ivy & Counsel setup
 (ivy-mode 1)
-(counsel-projectile-on)
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
 (global-set-key (kbd "C-s") 'swiper)
@@ -86,7 +91,9 @@
 
 ;; Projectile setup
 (projectile-mode)
+(counsel-projectile-mode)
 (global-set-key (kbd "C-.") 'counsel-projectile-ag)
+
 
 ;; Multiple Cursors setup
 (global-set-key (kbd "C-c >") 'mc/mark-next-like-this-symbol)
@@ -108,7 +115,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (wgrep browse-kill-ring focus exec-path-from-shell multiple-cursors counsel-projectile projectile ivy-hydra company counsel swiper ivy expand-region highlight-symbol undo-tree paredit magit cider))))
+    (hl-sexp neotree wgrep browse-kill-ring exec-path-from-shell multiple-cursors counsel-projectile projectile ivy-hydra company counsel swiper ivy expand-region highlight-symbol undo-tree paredit magit cider))))
 
 ;; custom-set-faces was added by Custom.
 ;; If you edit it by hand, you could mess it up, so be careful.
@@ -119,10 +126,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(font-lock-comment-face ((t (:foreground "color-245"))))
  '(font-lock-function-name-face ((t (:foreground "Black"))))
  '(font-lock-keyword-face ((t (:foreground "blue1"))))
  '(highlight-symbol-face ((t (:background "color-253"))))
+ '(hl-sexp-face ((t (:background "color-254"))))
  '(linum ((t (:inherit (shadow default) :foreground "color-250")))))
 
 (put 'scroll-left 'disabled nil)
