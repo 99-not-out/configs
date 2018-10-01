@@ -1,3 +1,6 @@
+vim-easymotion
+vim-gutentags
+
 fzf
 fzf.vim
 papercolor-theme
@@ -5,12 +8,9 @@ supertab
 vim-airline
 vim-airline-themes
 vim-autoclose
-vim-easymotion
 vim-fireplace
 vim-fugitive
 vim-gitgutter
-vim-gutentags
-vim-jdaddy
+vim-rhubarb
 vim-rooter
 vim-startify
-vim-vinegar
