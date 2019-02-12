@@ -1,16 +1,18 @@
-vim-easymotion
-vim-gutentags
+bundle/
+├── fzf
+├── fzf.vim
+├── vim-fireplace
+├── vim-fugitive
+├── vim-gitgutter
+├── vim-gutentags
+├── vim-matchmaker
+├── vim-repeat
+├── vim-sexp
+├── vim-sexp-mappings-for-regular-people
+└── vim-surround
 
-fzf
-fzf.vim
-papercolor-theme
-supertab
-vim-airline
-vim-airline-themes
-vim-autoclose
-vim-fireplace
-vim-fugitive
-vim-gitgutter
-vim-rhubarb
-vim-rooter
-vim-startify
+mvim_only_bundle/
+├── papercolor-theme
+├── vim-airline
+├── vim-airline-themes
+└── vim-startify
