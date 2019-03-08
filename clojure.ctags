@@ -1,0 +1,9 @@
+--regex-clojure=/\([ \t]*ns[ \t]+([-[:alnum:]*+!_:\/.?]+)/\1/n,namespace/{scope=push}
+--regex-clojure=/\([ \t]*def[ \t]+(\^[a-zA-Z-]+[ \t ]+)?([-[:alnum:]*+!_:\/.?<>]+)/\2/d,definition/{scope=ref}
+--regex-clojure=/\([ \t]*defn-[ \t]+(\^[a-zA-Z-]+[ \t ]+)?([-[:alnum:]*+!_:\/.?<>]+)/\2/f,function/{scope=ref}
+--regex-clojure=/\([ \t]*defmacro[ \t]+(\^[a-zA-Z-]+[ \t ]+)?([-[:alnum:]*+!_:\/.?<>]+)/\2/m,macro/{scope=ref}
+--regex-clojure=/\([ \t]*defmulti[ \t]+(\^[a-zA-Z-]+[ \t ]+)?([-[:alnum:]*+!_:\/.?<>]+)/\2/a,multimethod definition/{scope=ref}
+--regex-clojure=/\([ \t]*defmethod[ \t]+(\^[a-zA-Z-]+[ \t ]+)?([-[:alnum:]*+!_:\/.?<>]+)/\2/b,multimethod instance/{scope=ref}
+--regex-clojure=/\([ \t]*deftest[ \t]+(\^[a-zA-Z-]+[ \t ]+)?([-[:alnum:]*+!_:\/.?<>]+)/\2/d,definition/{scope=ref}
+--regex-clojure=/\([ \t]*defonce[ \t]+([-[:alnum:]*+!_:\/.?<>]+)/\1/c,definition (once)/{scope=ref}
+--regex-clojure=/\([ \t]*defstruct[ \t]+([-[:alnum:]*+!_:\/.?<>]+)/\1/s,struct/{scope=ref}

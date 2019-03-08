@@ -1,0 +1,7 @@
+--exclude=*.json
+--exclude=*.xml
+--exclude=*.log
+--exclude=*.md
+--exclude=*.sql
+--exclude=*.xslt
+--exclude=*.html

@@ -46,9 +46,7 @@ if has("gui_macvim")
   nnoremap <Leader>V :mks! ~/.vim/session/_xfer.vim<CR>:silent !osascript ~/open_vim.scpt<CR>
 else
   syntax off
-
   set laststatus=0
-
   hi Search cterm=NONE ctermfg=black ctermbg=white
 
   " open current file in mvim
@@ -63,8 +61,10 @@ endif
 
 " Normal mode leader mappings
 nnoremap <Leader>c :copen<CR>
-nnoremap <Leader>n :noh<CR>
+nnoremap <Leader>n :noh<CR>:set nospell<CR>
+nnoremap <Leader>S :setlocal spell spelllang=en_gb<CR>
 vmap <Leader>y "+y
+
 
 
 " Quickfix mappings
@@ -73,6 +73,7 @@ nnoremap <expr> q &buftype ==# 'quickfix' ? "\<C-w>q" : 'q'
 
 " Fireplace
 nnoremap <Leader>r :w<CR>:Require<CR>
+nnoremap <Leader>x :w<CR>:SyntasticCheck<CR>
 nnoremap <Leader>R :wa<CR>:Require!<CR>
 nnoremap <Leader>t :w<CR>:Require<CR>:.RunTests<CR>:copen<CR>
 nnoremap <Leader>T :w<CR>:Require<CR>:RunTests<CR>:copen<CR>
@@ -104,17 +105,22 @@ command! -bang -nargs=* Ag
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
 
+" Syntastic
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_clojure_checkers = ['eastwood']
+
+let g:syntastic_mode_map = {
+        \ "mode": "active",
+        \ "active_filetypes": [],
+        \ "passive_filetypes": ["clojure"] }
+
 
 " Local mods
-
-function! s:EastwoodRun()
-  call fireplace#session_eval("(require 'eastwood.lint)")
-  call fireplace#session_eval('(do (eastwood.lint/eastwood {:add-linters [:unused-namespaces] :out "/tmp/ew.tmp"}) nil)')
-  cgetfile /tmp/ew.ump
-  copen
-endfunction
-
-command! EW call s:EastwoodRun()
 
 nnoremap <leader>s :set operatorfunc=<SID>GrepOperator<cr>g@
 vnoremap <leader>s :<c-u>call <SID>GrepOperator(visualmode())<cr>
