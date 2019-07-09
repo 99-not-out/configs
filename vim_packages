@@ -1,18 +1,9 @@
-bundle/
-├── fzf
-├── fzf.vim
-├── vim-fireplace
-├── vim-fugitive
-├── vim-gitgutter
-├── vim-gutentags
-├── vim-matchmaker
-├── vim-repeat
-├── vim-sexp
-├── vim-sexp-mappings-for-regular-people
-└── vim-surround
-
-mvim_only_bundle/
-├── papercolor-theme
-├── vim-airline
-├── vim-airline-themes
-└── vim-startify
+~/.vim
+├── bundle
+    ├── fzf
+    ├── fzf.vim
+    ├── papercolor-theme
+    ├── vim-fireplace
+    ├── vim-gutentags
+    ├── vim-matchmaker
+    └── vim-surround
