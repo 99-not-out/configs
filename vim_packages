@@ -1,9 +1,19 @@
-~/.vim
-├── bundle
-    ├── fzf
-    ├── fzf.vim
-    ├── papercolor-theme
-    ├── vim-fireplace
-    ├── vim-gutentags
-    ├── vim-matchmaker
-    └── vim-surround
+~/.vim/bundle/
+├── ale
+├── bufexplorer
+├── fzf
+├── fzf.vim
+├── nerdtree
+├── nerdtree-git-plugin
+├── papercolor-theme
+├── pull_all.sh
+├── supertab
+├── vim-bufsurf
+├── vim-fireplace
+├── vim-gutentags
+├── vim-man
+├── vim-matchmaker
+├── vim-signify
+└── vim-surround
+
+15 directories, 1 file
