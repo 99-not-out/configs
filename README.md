@@ -1,3 +1,3 @@
-# emacs_config
+# Vim and Emacs configs
 
-My Emacs config
+My Vim and Emacs configs
