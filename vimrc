@@ -49,7 +49,7 @@ packadd! vim-gutentags
 ""
 "" set macvim specific stuff
 ""
-if has("gui_macvim")
+if has("gui_running")
   source ~/.vim/macvimrc
 else
   syntax off
@@ -74,6 +74,7 @@ nnoremap <Leader>g :!git status -sb<CR>
 nnoremap <Leader>n :noh<CR>:set nospell<CR>
 nnoremap <Leader>o :Files<CR>
 
+
 nnoremap * :set iskeyword-=/<CR>*:set iskeyword+=/<CR>
 
 " Quickfix buffer local mappings
@@ -87,6 +88,8 @@ nnoremap <expr> q &buftype ==# 'quickfix' ? "\<C-w>q" : 'q'
 
 " Gutentags
 let g:gutentags_file_list_command = 'fd -tf'
+let g:gutentags_trace = 0
+let g:gutentags_ctags_executable = '/opt/homebrew/Cellar/ctags/5.8_2/bin/ctags'
 
 " FZF
 let g:fzf_buffers_jump = 1
