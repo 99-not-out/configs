@@ -40,7 +40,6 @@ endif
 ""
 
 " Core usefulness packs
-packadd! bufexplorer
 packadd! fzf
 packadd! fzf.vim
 packadd! vim-cursorword
@@ -62,18 +61,16 @@ endif
 ""
 
 " Normal mode leader mappings
-nnoremap <silent> <F12> :ToggleBufExplorer<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>c :copen<CR>
 nnoremap <Leader>d :BTags<CR>
+nnoremap <Leader>D :Tags<CR>
 nnoremap <Leader>e :BLines <C-R><C-W><CR>
 nnoremap <Leader>E :Ag <C-R><C-W><CR>
 nnoremap <Leader>f :BLines<CR>
-nnoremap <Leader>D :Tags<CR>
 nnoremap <Leader>g :!git status -sb<CR>
 nnoremap <Leader>n :noh<CR>:set nospell<CR>
 nnoremap <Leader>o :Files<CR>
-
 
 nnoremap * :set iskeyword-=/<CR>*:set iskeyword+=/<CR>
 
@@ -95,10 +92,6 @@ let g:gutentags_ctags_executable = '/opt/homebrew/Cellar/ctags/5.8_2/bin/ctags'
 let g:fzf_buffers_jump = 1
 let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
 let g:fzf_preview_window = ['up:50%:hidden', 'ctrl-s']
-
-" Bufexplorer
-let g:bufExplorerShowRelativePath = 1
-let g:bufExplorerDisableDefaultKeyMapping = 1
 
 ""
 "" Local mods

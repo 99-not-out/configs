@@ -7,7 +7,7 @@
 let s:path = system("echo echo VIMPATH'${PATH}' | $SHELL -l")
 let $PATH = matchstr(s:path, 'VIMPATH\zs.\{-}\ze\n')
 
-
+colorscheme PaperColor
 syntax enable
 set number mouse=a
 if has("gui_running")
@@ -16,13 +16,16 @@ endif
 
 " IDE stuff
 packadd! ale
+packadd! bufexplorer
 packadd! nerdtree
 packadd! nerdtree-git-plugin
 packadd! tagbar
 packadd! traces.vim
 packadd! vim-fireplace
+packadd! vim-fugitive
 packadd! vim-signify
 
+nnoremap <silent> <F12> :ToggleBufExplorer<CR>
 nnoremap <Leader>r :w<CR>:Require<CR>
 nnoremap <Leader>t :.RunTests<CR>
 nnoremap <Leader>R :wa<CR>:Require!<CR>
@@ -37,8 +40,12 @@ packadd! vim-color-desert-night
 "" Plugin Configs
 ""
 
+" Bufexplorer
+let g:bufExplorerShowRelativePath = 1
+let g:bufExplorerDisableDefaultKeyMapping = 1
+
 " ALE
-let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_text_changed = 0
 
 " NERDTree
 let g:NERDTreeNodeDelimiter = "\u00a0"

@@ -1,129 +1,60 @@
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
+(setq package-enable-at-startup nil)
 
-(add-to-list 'exec-path "/usr/local/bin/")
-(set-default-font "Consolas 13")
+;; Temp workaround for v28 SVG issue
+(when (fboundp 'image-types)
+  (add-to-list 'image-types 'svg))
+(tool-bar-mode -1)
 
-(require 'cider)
-(require 'magit)
-(require 'paredit)
-(require 'undo-tree)
-(require 'highlight-symbol)
-(require 'expand-region)
-(require 'ivy)
-(require 'swiper)
-(require 'counsel)
-(require 'company)
-(require 'ivy-hydra)
-(require 'projectile)
-(require 'counsel-projectile)
-(require 'multiple-cursors)
-(require 'exec-path-from-shell)
-(require 'browse-kill-ring)
-(require 'wgrep)
-(require 'neotree)
+;; straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-;; Make env vars the same in GUI as per shell
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+(straight-use-package 'use-package)
 
-(unless window-system
-  (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
-  (global-set-key (kbd "<mouse-5>") 'scroll-up-line))
+;; Enable vertico
+(use-package vertico
+  :init
+  (vertico-mode)
 
-;; To avoid the arghz ...
-(winner-mode 1)
+  ;; Different scroll margin
+  ;; (setq vertico-scroll-margin 0)
 
-(defun show-file-name ()
-  "Show the full path file name in the minibuffer."
-  (interactive)
-  (message (buffer-file-name)))
-(global-set-key (kbd "<f12>") 'show-file-name)
+  ;; Show more candidates
+  ;; (setq vertico-count 20)
 
-(defun reverse-transpose-sexps (arg)
-  (interactive "*p")
-  (transpose-sexps (- arg))
-  (backward-sexp (1+ arg))
-  (forward-sexp 2))
-(global-set-key (kbd "C-M-y") 'reverse-transpose-sexps)
+  ;; Grow and shrink the Vertico minibuffer
+  ;; (setq vertico-resize t)
 
-;; Add a space after line numbers in linum mode
-(setq linum-format "%d ")
+  ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
+  ;; (setq vertico-cycle t)
+)
 
-;; Neotree setup
-(setq neo-window-width 35)
-(global-set-key (kbd "C-c n") 'neotree)
+;; Enable rich annotations using the Marginalia package
+(use-package marginalia
+  ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+  ;; available in the *Completions* buffer, add it to the
+  ;; `completion-list-mode-map'.
+  :bind (:map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
 
-;; Magit open in current window
-(setq magit-display-buffer-function
-      (lambda (buffer)
-        (display-buffer buffer '(display-buffer-same-window))))
+  ;; The :init section is always executed.
+  :init
 
-;; Highlight Symbol setup - bind to F3
-(global-set-key [(control f3)] 'highlight-symbol)
-(global-set-key [f3] 'highlight-symbol-next)
-(global-set-key [(shift f3)] 'highlight-symbol-prev)
-(global-set-key [(meta f3)] 'highlight-symbol-query-replace)
-(setq highlight-symbol-idle-delay 0.5)
+  ;; Marginalia must be actived in the :init section of use-package such that
+  ;; the mode gets enabled right away. Note that this forces loading the
+  ;; package.
+  (marginalia-mode))
 
-;; Expand Region setup
-(global-set-key (kbd "C-=") 'er/expand-region)
+(use-package magit)
 
-;; Undo Tree setup
-(global-undo-tree-mode)
-
-;; Hide/Show setup
-(global-set-key (kbd "C-c <up>")    'hs-hide-all)
-(global-set-key (kbd "C-c <down>")  'hs-show-all)
-(global-set-key (kbd "C-c <right>") 'hs-hide-block)
-(global-set-key (kbd "C-c <left>")  'hs-show-block)
-
-;; Ivy & Counsel setup
-(ivy-mode 1)
-(setq ivy-use-virtual-buffers t)
-(setq enable-recursive-minibuffers t)
-(global-set-key (kbd "C-s") 'swiper)
-(global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(global-set-key (kbd "C-c r") 'ivy-resume)
-(define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
-
-;; Clojure Mode setup
-(add-hook 'clojure-mode-hook 'hs-minor-mode)
-(add-hook 'clojure-mode-hook 'paredit-mode)
-(add-hook 'clojure-mode-hook 'highlight-symbol-mode)
-(add-hook 'clojure-mode-hook 'company-mode)
-
-;; Projectile setup
-(projectile-mode)
-(counsel-projectile-mode)
-(global-set-key (kbd "C-.") 'counsel-projectile-ag)
-
-
-;; Multiple Cursors setup
-(global-set-key (kbd "C-c >") 'mc/mark-next-like-this-symbol)
-(global-set-key (kbd "C-c <") 'mc/mark-previous-like-this-symbol)
-(global-set-key (kbd "C-c /") 'mc/mark-all-symbols-like-this-in-defun)
-
-;; Browse kill ring aetup
-(global-set-key (kbd "C-c k") 'browse-kill-ring)
-
-
-;; custom-set-variables was added by Custom.
-;; If you edit it by hand, you could mess it up, so be careful.
-;; Your init file should contain only one such instance.
-;; If there is more than one, they won't work right.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(cider-lein-parameters "with-profile +e2e repl :headless :host ::")
- '(package-selected-packages
-   (quote
-    (tango-plus-theme slime goto-last-change evil hl-sexp neotree wgrep browse-kill-ring exec-path-from-shell multiple-cursors counsel-projectile projectile ivy-hydra company counsel swiper ivy expand-region highlight-symbol undo-tree paredit magit cider)))
- '(xterm-mouse-mode t))
-
-(put 'scroll-left 'disabled nil)
+(use-package consult)
